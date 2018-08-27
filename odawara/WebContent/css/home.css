@@ -1,0 +1,191 @@
+@CHARSET "UTF-8";
+
+
+* {
+  margin: 0;
+  padding: 0;
+
+}
+ .concept{
+   width:60%;
+   text-align:center;
+   margin:0 auto;
+   font-size:20px;
+ }
+
+ .BBQ_spot_introduction{
+   width:60%;
+   text-align:center;
+   margin:0 auto;
+   font-size:20px;
+ }
+
+h3{
+text-align:center;
+border-bottom:1px solid black;
+width:100%
+}
+
+/* スライドショーの枠線消し */
+.bx-wrapper {
+  margin: 0 !important;
+  -moz-box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  background: none !important;
+}
+/* スライドショーを画面いっぱいに */
+.slider img{
+  width: 100% !important;
+}
+
+/* ページトップボタン */
+.pagetop {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+}
+
+.pagetop:hover{
+  opacity:0.5;
+  }
+
+/* BBQ場紹介 */
+/* フェードインのための設定 */
+.concept{
+    margin:0 auto;
+    opacity : 0;
+    width:0px; height:0px;
+    padding-top:50px;
+    transform : translate(0, 50px);
+    transition : all 2s;
+    background-color:#8CD790;
+    animation-name:Con;
+    animation-duration:2s;
+    animation-fill-mode:forwards;
+    animation-play-state:paused;
+    border:3px #8CD790 outset;
+}
+.concept.scrollin {
+    opacity : 1;
+    transform : translate(0, 0);
+    animation-play-state:running;
+}
+@keyframes Con{
+0%{width:0px; height:0px; border-radius:0px; opacity:0;}
+50%{width:600px; height:250px; border-radius:450px; opacity:0.75;}
+100%{width:600px; height:250px;  #8CD790 solid; border-radius:450px; background-color:white; opacity:0.75;}
+}
+
+.intro_title {
+  margin:0 auto;
+    opacity : 0;
+    width:0px; height:0px;
+    padding-top:50px;
+    transform : translate(0, 50px);
+    transition : all 2s;
+    background-color:#8CD790;
+    animation-name:Con2;
+    animation-duration:2s;
+    animation-fill-mode:forwards;
+    animation-play-state:paused;
+}
+.intro_title.scrollin2 {
+    opacity : 1;
+    transform : translate(0, 0);
+    animation-play-state:running;
+}
+@keyframes Con2{
+0%{width:0px; height:0px; border-radius:0px; opacity:0;}
+100%{width:600px; height:200px; border-radius:450px; opacity:0.75;}
+}
+
+.BBQ1 {
+    margin:0 auto;
+    opacity : 0;
+    transform : translate(-100px, 100px);
+    transition : all 2s;
+}
+.BBQ1.scrollin3 {
+    opacity : 1;
+    transform : translate(0, 0);
+}
+.BBQ2 {
+    margin:0 auto;
+    opacity : 0;
+    transform : translate(100px, 100px);
+    transition : all 2s;
+}
+.BBQ2.scrollin4 {
+    opacity : 1;
+    transform : translate(0, 0);
+}
+.BBQ3 {
+    margin:0 auto;
+    opacity : 0;
+    transform : translate(-100px, 100px);
+    transition : all 2s;
+}
+.BBQ3.scrollin5 {
+    opacity : 1;
+    transform : translate(0, 0);
+}
+
+/* 内容 */
+
+.BBQ1_img{
+float:left;
+height:250px;
+padding-top:10px;
+}
+.BBQ1_text{
+padding-top:10px;
+width:75%;
+  float:left;
+  text-aline:left;
+  height:250px;
+}
+.BBQ2{
+clear:both;
+}
+.BBQ2_text{
+padding-top:10px;
+width:75%;
+  float:left;
+  text-aline:left;
+  height:250px;
+}
+.BBQ2_img{
+float:left;
+height:250px;
+padding-top:10px;
+}
+
+
+.BBQ3{
+clear:both;
+}
+.BBQ3_img{
+float:left;
+height:250px;
+padding-top:10px;
+}
+.BBQ3_text{
+padding-top:10px;
+width:75%;
+  float:left;
+  text-aline:left;
+  height:250px;
+}
+
+.space1{
+  height:150px;
+}
+
+.space2{
+clear:both;
+  height:100px;
+
+}
+
