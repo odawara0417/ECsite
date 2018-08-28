@@ -4,11 +4,23 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
+
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="./css/style.css">
-<title>ヘッダー</title>
+        <title>ヘッダー</title>
+
+<script type="text/javascript">
+
+    var sessionTimeout = function() {
+    	location.href = "TimeoutAction"
+    }
+    setTimeout(sessionTimeout, 600000)
+
+</script>
+
 <script>
+
 function goLoginAction(){
 	document.getElementById("form").action="GoLoginAction";
 }
@@ -29,41 +41,57 @@ function goSearchItemAction(){
 	document.getElementById("form").action="SearchItemAction";
 }
 
-function goVillageOfKamabokoAction(){
-	document.getElementById("form").action="VillageOfKamabokoAction";
-}
 </script>
+<style type="text/css">
+.headerLogo:link { color:#96e6a1; text-decoration:none }
+.headerLogo:visited { color:#96e6a1; text-decoration:none }
+.headerLogo:hover { color:#96e6a1; text-decoration:none }
+.headerLogo:active { color:#96e6a1; text-decoration:none }
+</style>
 </head>
+
 <body>
 <header>
-<div id="header">
-<div id="header-title">
-かまぼこの里
-</div>
-<div id="header-menu">
-<ul>
-<s:form id="form" name="form">
-<li><s:submit value="かまぼこの里について" class="submit_btn" onclick="goVillageOfKamabokoAction();"/></li>
-	<s:if test="#session.logined==1">
-	<li><s:submit value="ログアウト" class="submit_btn" onclick="goLogoutAction();"/></li>
-	</s:if>
-	<s:else>
-		<li><s:submit value="ログイン" class="submit_btn" onclick="goLoginAction();"/></li>
-	</s:else>
-	<li><s:submit value="カート" class="submit_btn" onclick="goCartAction();"/><li>
-	<li><s:submit value="商品一覧" class="submit_btn" onclick="goProductListAction();"/></li>
-	<s:if test="#session.logined==1">
-		<li><s:submit value="マイページ" class="submit_btn" onclick="goMyPageAction();"/></li>
-	</s:if>
-		<s:if test='#session.containsKey("mCategoryDtoList")'>
-	<li><s:select name="categoryId" list="#session.mCategoryDtoList" listValue="categoryName" listKey="categoryId" class="cs-div" id="categoryId"/></li>
-	</s:if>
-	<li><s:textfield name="keywords" class="txt-keywords" placeholder="検索ワード" /></li>
-	<li><s:submit value="商品検索" class="submit_btn" onclick="goSearchItemAction();"/><li>
-</s:form>
-</ul>
-</div>
-</div>
+             <div id="header">
+                     <div id="header-title"><a class="headerLogo" href="HomeAction">かまぼこの里</a></div>
+                     <div id="header-menu">
+                             <ul>
+                                  <s:form id="form" name="form">
+                                       <s:if test="#session.status==1">
+                                               <li><s:submit value="管理者ホーム" class="header_btn" onclick="goAdminAction();"/></li>
+                                               <li><s:submit value="商品追加画面" class="header_btn" onclick="goAdminRegistAction();"/></li>
+                                               <li><s:submit value="商品更新・編集画面" class="header_btn" onclick="goAdminEditAction();"/></li>
+                                               <li><s:submit value="商品削除画面" class="header_btn" onclick="goAdminDeleteAction();"/></li>
+                                               <li><s:submit value="商品一覧画面" class="header_btn" onclick="goAdminProductSelectAction();"/></li>
+                                               <li><s:submit value="購入履歴画面" class="header_btn" onclick="goAdminPurchaseSelectAction();"/></li>
+                                               <li><s:submit value="データ確認画面" class="header_btn" onclick="goAdminAllSelectAction();"/></li>
+                                       </s:if>
+                                       <s:if test='#session.containsKey("mCategoryDtoList") && #session.status!=1'>
+                                               <li><s:select name="categoryId" list="#session.mCategoryDtoList" listValue="categoryName" listKey="categoryId" class="cs-div" id="categoryId"/></li>
+                                       </s:if>
+                                       <s:if test="#session.logined==0 || #session.status==0">
+                                               <li><s:textfield name="keywords" class="txt-keywords" placeholder="検索ワード" />
+                                               <s:submit value="検索" class="header_search_btn" onclick="goSearchItemAction();"/></li>
+                                       </s:if>
+                                       <s:if test="#session.logined==1">
+                                               <li><s:submit value="ログアウト" class="header_btn" onclick="goLogoutAction();"/></li>
+                                       </s:if>
+                                       <s:else>
+                                               <li><s:submit value="ログイン" class="header_btn" onclick="goLoginAction();"/></li>
+                                       </s:else>
+
+                                               <li><s:submit value="カート" class="header_btn" onclick="goCartAction();"/></li>
+                                               <li><s:submit value="商品一覧" class="header_btn" onclick="goProductListAction();"/></li>
+
+                                       <s:if test="#session.logined==1 && #session.status==0">
+                                               <li><s:submit value="マイページ" class="header_btn" onclick="goMyPageAction();"/></li>
+                                       </s:if>
+
+                                  </s:form>
+                             </ul>
+                     </div>
+                     <div id="menu-background"></div>
+                     </div>
 </header>
 </body>
 </html>

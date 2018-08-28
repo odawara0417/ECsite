@@ -1,91 +1,131 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<link rel="stylesheet" href="./css/style.css">
-<title>商品詳細</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="./css/product.css">
+
+<title>商品詳細画面</title>
 </head>
 <body>
-<jsp:include page="header.jsp" />
+
+	<s:include value="header.jsp" />
+
+
 <div id="contents">
-<h1>商品詳細画面</h1>
-<s:form action="AddCartAction">
-<div class="box">
-<div class="2column-container">
-<div class="right">
-<img src='<s:property value="%{#session.imageFilePath}"/>/<s:property value="%{#session.imagefileName}"/>' class="item-image-box-320"/><br>
-</div>
-<div class="left">
-<table class="vertical-list-table-mini">
-<tr>
-<th scope="row"><s:label value="商品名"/></th>
-<td><s:property value="%{#session.productName"/></td>
-</tr>
-
-<tr>
-<th scope="row"><s:label value="商品名かな"/></th>
-<td><s:property value="%{#session.productNameKana"/></td>
-</tr>
-
-<tr>
-<th scope="row"><s:label value="値段"/></th>
-<td><s:property value="%{#session.price"/>円</td>
-</tr>
-
-<tr>
-<th scope="row"><s:label value="購入個数"/></th>
-<td><s:select name="productCount" list="%{#session.productCountList"/>個</td>
-</tr>
-
-<tr>
-<th scope="row"><s:label value="発売会社"/></th>
-<td><s:property value="%{#session.releaseCompany"/></td>
-</tr>
-
-<tr>
-<th scope="row"><s:label value="発売年月日"/></th>
-<td><s:property value="%{#session.releaseDate"/></td>
-</tr>
-
-<tr>
-<th scope="row"><s:label value="商品詳細情報"/></th>
-<td><s:property value="%{#session.productDescliption"/></td>
-</tr>
-</table>
-</div></div>
-
-<s:hidden name="productId" value="%{#session.productId}"/>
-	<s:hidden name="productName" value="%{#session.productName}"/>
-	<s:hidden name="productNameKana" value="%{#session.productNameKana}"/>
-	<s:hidden name="imageFilePath" value="%{#session.imageFilePath}"/>
-	<s:hidden name="imageFileName" value="%{#session.imageFileName}"/>
-	<s:hidden name="price" value="%{#session.price}"/>
-	<s:hidden name="releaseCompany" value="%{#session.releaseCompany}"/>
-	<s:hidden name="releaseDate" value="%{#session.releaseDate}"/>
-	<s:hidden name="productDescription" value="%{#session.productDescription}"/>
+	<div id="top_d">
+		<h1>商品詳細ページ</h1>
 	</div>
-	<div class="submit_btn_box">
-	<s:submit value="カートに追加" class="submit_btn" />
-	</div>
-	</s:form>
-	<div class="box">
-	<div class="product-details-recommand-box">
-	<s:iterator value="#session.productInfoDtoList">
-	<div class="recommand-box">
-	<a href='<s:url action="ProductDetailsAction">
-		<s:param name="productId" value="%{productId}"/>
-		</s:url>'><img src='<s:property value="imageFilePath"/>/<s:property value="imageFileName"/>' class="item-image-box-100"/></a>
-		<s:property value="productName"/><br>
+
+	<br><br>
+
+	<div id="fadein_c">
+
+	<!-- ～商品詳細を表示～ -->
+	<div id="item_detail">
+		<div id="left_box">
+			<table>
+			<tr>
+				<th scope="col">商品画像</th>
+			</tr>
+			<tr>
+				<td><div id="item_image_box"> <img id="item_image" src="<s:property value='#session.imageFilePath'/>/<s:property value='#session.imageFileName'/>"></div></td>
+			</tr>
+			</table>
 		</div>
+
+		<div id="right_box">
+			<div id="sub_title_i">
+			<h2>～ 商品情報 ～</h2>
+			</div>
+			<s:form action="AddCartAction">
+			<s:hidden name="productId" value="%{#session.productId}"/>
+			<s:hidden name="productName" value="%{#session.productName}"/>
+			<s:hidden name="productNameKana" value="%{#session.productNameKana}"/>
+			<s:hidden name="imageFilePath" value="%{#session.imageFilePath}"/>
+			<s:hidden name="imageFileName" value="%{#session.imageFileName}"/>
+			<s:hidden name="releaseDate" value="%{#session.releaseDate}"/>
+			<s:hidden name="releaseCompany" value="%{#session.releaseCompany}"/>
+			<s:hidden name="price" value="%{#session.price}"/>
+			<s:hidden name="categoryId" value="%{#session.categoryId}"/>
+			<table id="item_info">
+				<tr>
+					<th scope="row">商品名</th>
+					<td><s:property value="#session.productName"/></td>
+				</tr>
+				<tr>
+					<th scope="row">商品名ふりがな</th>
+					<td><s:property value="#session.productNameKana"/></td>
+				</tr>
+				<tr>
+					<th scope="row">値段</th>
+					<td><s:property value="#session.price"/><span>円</span></td>
+				</tr>
+				<tr>
+					<th scope="row">発売会社</th>
+					<td><s:property value="#session.releaseCompany"/></td>
+				</tr>
+				<tr>
+					<th scope="row">発売年月日</th>
+					<td><s:property value="#session.releaseDate"/></td>
+				</tr>
+				<tr>
+					<th scope="row">商品詳細情報</th>
+					<td height="52"><div id="description"><s:property value="#session.productDescription"/></div></td>
+				</tr>
+			</table>
+			<table id="buy">
+				<tr>
+					<th><s:select name="productCount" list="%{#session.productCountList}"/>個</th>
+					<td><s:submit value="カートに追加" class="submit_btn"/></td>
+				</tr>
+			</table>
+
+
+
+			</s:form>
+		</div>
+	</div>
+	<br><br>
+	<!-- ～関連商品を表示～ -->
+	<s:if test="relate_noneFlg=='true'">
+		<div id="relate_none">
+			<div>
+				同カテゴリの関連商品はありません。
+			</div>
+		</div>
+	</s:if>
+	<s:else>
+	<div id="relate_logo">
+		<a id="logo">関連商品</a>
+	</div>
+	<div id="related_product_list">
+		<s:iterator value="#session.relatedProductList">
+			<div id="product_box">
+				<ul>
+					<li>
+					<div id="product_image_box">
+					<a href='<s:url action="ProductDetailsAction">
+							<s:param name="productId" value="%{productId}"/>
+							</s:url>'>
+
+							<img id="product_image" src="<s:property value='imageFilePath'/>/<s:property value='imageFileName'/>">
+					</a>
+					</div>
+					</li>
+					<li id="i_info"><s:property value="productName" /></li>
+				</ul>
+			</div>
 		</s:iterator>
-		</div>
-		</div>
-		</div>
-		<s:include value="footer.jsp"/>
+	</div>
+	</s:else>
+
+	</div>
+<br>
+</div>
+
+	<s:include value="footer.jsp" />
 
 </body>
-</html>

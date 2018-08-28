@@ -3,52 +3,114 @@ package com.internousdev.kamaboko.action;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.struts2.interceptor.SessionAware;
 
+import com.internousdev.kamaboko.dao.MCategoryDAO;
 import com.internousdev.kamaboko.dao.ProductInfoDAO;
 import com.internousdev.kamaboko.dto.MCategoryDTO;
 import com.internousdev.kamaboko.dto.ProductInfoDTO;
 import com.opensymphony.xwork2.ActionSupport;
 
+public class ProductDetailsAction extends ActionSupport implements SessionAware {
 
-public class ProductDetailsAction extends ActionSupport implements SessionAware{
+	public Map<String, Object> session;
 	private int productId;
-	private List<MCategoryDTO> mCategoryDtoList=new ArrayList<MCategoryDTO>();
-	private List<ProductInfoDTO> productInfoDtoList=new ArrayList<ProductInfoDTO>();
-	private String categoryId;
-	private Map<String,Object>session;
-	public String execute() throws SQLException{
-		String result=ERROR;
-		ProductInfoDAO productInfoDAO=new ProductInfoDAO();
-		ProductInfoDTO productInfoDTO=new ProductInfoDTO();
-		productInfoDTO=productInfoDAO.getProductInfo(productId);
-		session.put("id", productInfoDTO.getId());
+
+	private List<MCategoryDTO> mCategoryDtoList = new ArrayList<MCategoryDTO>();
+	private String keywords;
+
+	private String s_categoryId;
+	private List<ProductInfoDTO> relatedProductList = new ArrayList<ProductInfoDTO>();
+	private String relate_noneFlg = "false";
+
+	public String execute() throws SQLException {
+		String result = ERROR;
+
+		// セッション mCategoryDtoList はヘッダーにて用いているので、無い場合は必要。mCategoryList??
+		if (!session.containsKey("mCategoryDtoList")) {
+			MCategoryDAO mCategoryDao = new MCategoryDAO();
+			mCategoryDtoList = mCategoryDao.getMCategoryList();
+			session.put("mCategoryDtoList", mCategoryDtoList);
+		}
+		// セッションlogined はヘッダーにて用いているので、無い場合は非ログイン状態として0を入れる。
+		if (!session.containsKey("logined")) {
+			session.put("logined", 0);
+		}
+
+		ProductInfoDAO pDAO1 = new ProductInfoDAO();
+		// product_idが存在するかを調べる 存在しない場合は一覧に戻す
+		if (!(pDAO1.checkExist(productId))){
+			return result;
+		}
+
+		// 選ばれた商品の商品情報を取得。productId が必要。
+		ProductInfoDTO productInfoDTO = new ProductInfoDTO();
+		productInfoDTO = pDAO1.getProductInfo(productId);
+		session.put("productInfoDTO", productInfoDTO);
 		session.put("productId", productInfoDTO.getProductId());
+
+		// 商品名
 		session.put("productName", productInfoDTO.getProductName());
+		// 商品名かな
 		session.put("productNameKana", productInfoDTO.getProductNameKana());
+		// 値段
+		session.put("price", productInfoDTO.getPrice());
+		// 購入個数用のリスト
+		List<Integer> productCountList = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5));
+		session.put("productCountList", productCountList);
+		// 発売会社
+		session.put("releaseCompany", productInfoDTO.getReleaseCompany());
+		// 発売年月
+		session.put("releaseDate", productInfoDTO.getReleaseDate());
+		// 商品詳細
+		session.put("productDescription", productInfoDTO.getProductDescription());
+		// 商品画像用の情報
 		session.put("imageFilePath", productInfoDTO.getImageFilePath());
 		session.put("imageFileName", productInfoDTO.getImageFileName());
-		session.put("price", productInfoDTO.getPrice());
-		session.put("releaseCompany", productInfoDTO.getReleaseCompany());
-		session.put("releaseDate", productInfoDTO.getReleaseDate());
-		session.put("productDescription", productInfoDTO.getProductDescription());
 
-		List<Integer> productCountList=new ArrayList<Integer>(Arrays.asList(1,23,4,5));
-		session.put("productCountList",productCountList);
-		productInfoDtoList=productInfoDAO.getProductInfoListByCategoryId(productInfoDTO.getCategoryId(), productInfoDTO.getProductId(), 0,3);
-		Iterator<ProductInfoDTO> iterator=productInfoDtoList.iterator();
-		if(!(iterator.hasNext())){
-			productCountList=null;
+		// その他、使用したい情報。
+		session.put("categoryId", productInfoDTO.getCategoryId());
+		s_categoryId = session.get("categoryId").toString();
+
+		// 正常に値を取得できていそうか確認。
+		if (!(s_categoryId.equals("0"))) {
+			result = SUCCESS;
 		}
-		if(!productInfoDtoList.isEmpty() ||productCountList==null ){
-			session.put("productInfoDtoList",productInfoDtoList);
+
+		// 関連商品のリスト relatedProductList を取得。カテゴリIDと商品IDが必要。表示数に関連する数値 0, 3 を記述。
+		// 今は、同カテゴリの商品のリストをランダムに並び替えた上で【先頭3行】を取得する設定。
+		ProductInfoDAO pDAO2 = new ProductInfoDAO();
+		int iCategoryId = Integer.parseInt(s_categoryId);
+		relatedProductList = pDAO2.getProductInfoListByCategoryId(iCategoryId, productId, 0, 3);
+		session.put("relatedProductList", relatedProductList);
+
+		// 関連商品があるかどうか確認。
+		if (relatedProductList.isEmpty()) {
+			setRelate_noneFlg("true");
 		}
 		return result;
 	}
+
+	public Map<String, Object> getSession() {
+		return session;
+	}
+
+	@Override
+	public void setSession(Map<String, Object> session) {
+		this.session = session;
+	}
+
+	public int getProductId() {
+		return productId;
+	}
+
+	public void setProductId(int productId) {
+		this.productId = productId;
+	}
+
 	public List<MCategoryDTO> getmCategoryDtoList() {
 		return mCategoryDtoList;
 	}
@@ -57,28 +119,20 @@ public class ProductDetailsAction extends ActionSupport implements SessionAware{
 		this.mCategoryDtoList = mCategoryDtoList;
 	}
 
-	public String getCategoryId() {
-		return categoryId;
+	public String getKeywords() {
+		return keywords;
 	}
-	public void setCategoryId(String categoryId) {
-		this.categoryId = categoryId;
+
+	public void setKeywords(String keywords) {
+		this.keywords = keywords;
 	}
-	public int getProductId() {
-		return productId;
+
+	public String getRelate_noneFlg() {
+		return relate_noneFlg;
 	}
-	public void setProductId(int productId) {
-		this.productId = productId;
+
+	public void setRelate_noneFlg(String relate_noneFlg) {
+		this.relate_noneFlg = relate_noneFlg;
 	}
-	public List<ProductInfoDTO> getProductInfoDtoList() {
-		return productInfoDtoList;
-	}
-	public void setProductInfoDtoList(List<ProductInfoDTO> productInfoDtoList) {
-		this.productInfoDtoList = productInfoDtoList;
-	}
-	public Map<String, Object> getSession() {
-		return session;
-	}
-	public void setSession(Map<String, Object> session) {
-		this.session = session;
-	}
+
 }

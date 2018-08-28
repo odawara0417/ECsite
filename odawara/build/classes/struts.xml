@@ -10,10 +10,6 @@
 <result name="success">home.jsp</result>
 </action>
 
-  <action name="VillageOfKamabokoAction" class="com.internousdev.kamaboko.action.VillageOfKamabokoAction" method="execute">
-		<result name="success">kamaboko.jsp</result>
-	</action>
-
   <action name="GoLoginAction" class="com.internousdev.kamaboko.action.GoLoginAction" method="execute">
 		<result name="success">login.jsp</result>
 		<result name="error">home.jsp</result>
@@ -84,7 +80,10 @@
 		<result name="error">productList.jsp</result>
 	</action>
 
-
+	<action name="TimeoutAction" class="com.internousdev.kamaboko.action.TimeoutAction"
+			method="execute">
+			<result name="success">timeout.jsp</result>
+		</action>
 
 
 </package>
