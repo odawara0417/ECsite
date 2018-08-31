@@ -15,7 +15,6 @@ public class ResetPasswordCompleteAction extends ActionSupport implements Sessio
 
 	public String execute() {
 		String result = ERROR;
-		String token = String.valueOf(session.get("token"));
 
 		UserInfoDAO userInfoDAO = new UserInfoDAO();
 

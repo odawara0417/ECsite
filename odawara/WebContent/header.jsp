@@ -18,6 +18,27 @@
     setTimeout(sessionTimeout, 600000)
 
 </script>
+<style type="text/css">
+#header {
+   width:100%;
+}
+
+#header-menu {
+  position:fixed;
+  float:left;
+  }
+
+#header-menu ul{
+    float:left;
+}
+#header-menu li{
+    display:inline-block;
+    float:right;
+}
+
+
+
+</style>
 
 <script>
 

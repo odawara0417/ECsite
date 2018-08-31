@@ -6,6 +6,7 @@
 <constant name="struts.devMode" value="true"/>
 <package name="com.internousdev.kamaboko.action" extends="struts-default">
 
+<!-- ホーム画面遷移 -->
 <action name="HomeAction" class="com.internousdev.kamaboko.action.HomeAction" method="execute">
 <result name="success">home.jsp</result>
 </action>
@@ -15,6 +16,7 @@
 		<result name="error">home.jsp</result>
 	</action>
 
+<!-- ログイン関係 -->
 	  <action name="LoginAction" class="com.internousdev.kamaboko.action.LoginAction" method="execute">
 		<result name="success">home.jsp</result>
 		<result name="error">login.jsp</result>
@@ -25,6 +27,7 @@
 		<result name="error">home.jsp</result>
 	</action>
 
+<!-- ユーザー登録関係 -->
 	<action name="CreateUserAction" class="com.internousdev.kamaboko.action.CreateUserAction" method="execute">
 		<result name="success">createUser.jsp</result>
 		<result name="error">home.jsp</result>
@@ -40,6 +43,7 @@
 		<result name="error">createUser.jsp</result>
 	</action>
 
+<!-- パスワードリセット -->
 	<action name="ResetPasswordAction" class="com.internousdev.kamaboko.action.ResetPasswordAction" method="execute">
 		<result name="success">resetPassword.jsp</result>
 		<result name="error">login.jsp</result>
@@ -55,6 +59,7 @@
 		<result name="error">resetPassword.jsp</result>
 	</action>
 
+<!-- マイページ遷移 -->
 	<action name="MyPageAction" class="com.internousdev.kamaboko.action.MyPageAction" method="execute">
 		<result name="success">myPage.jsp</result>
 		<result name="error">home.jsp</result>
@@ -65,17 +70,22 @@
 		<result name="error">home.jsp</result>
 	</action>
 
-	  <action name="ProductListAction" class="com.internousdev.kamaboko.action.ProductListAction" method="execute">
+	<action name="AddCartAction" class="com.internousdev.kamaboko.action.AddCartAction" method="execute">
+		<result name="success">cart.jsp</result>
+		<result name="error">productDetail.jsp</result>
+	</action>
+
+	<action name="ProductListAction" class="com.internousdev.kamaboko.action.ProductListAction" method="execute">
 		<result name="success">productList.jsp</result>
 		<result name="error">home.jsp</result>
 	</action>
 
-	 <action name="ProductDetailsAction" class="com.internousdev.kamaboko.action.ProductDetailsAction" method="execute">
+	<action name="ProductDetailsAction" class="com.internousdev.kamaboko.action.ProductDetailsAction" method="execute">
 		<result name="success">productDetails.jsp</result>
 		<result name="error">productList.jsp</result>
 	</action>
 
-     <action name="SearchItemAction" class="com.internousdev.kamaboko.action.SearchItemAction" method="execute">
+    <action name="SearchItemAction" class="com.internousdev.kamaboko.action.SearchItemAction" method="execute">
 		<result name="success">productList.jsp</result>
 		<result name="error">productList.jsp</result>
 	</action>
@@ -83,7 +93,7 @@
 	<action name="TimeoutAction" class="com.internousdev.kamaboko.action.TimeoutAction"
 			method="execute">
 			<result name="success">timeout.jsp</result>
-		</action>
+	</action>
 
 
 </package>

@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<link rel="stylesheet" href="./css/product.css">
+<!-- 	<link rel="stylesheet" href="./css/product.css"> -->
 
 <title>商品詳細画面</title>
 </head>
